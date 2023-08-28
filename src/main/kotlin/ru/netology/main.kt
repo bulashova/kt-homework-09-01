@@ -23,8 +23,7 @@ fun main() {
     ChatService.printAll(ChatService.chats)
     println("")
     println("Список чатов для пользователя Id - 222")
-    ChatService.getChatsByUserId(222)
-    ChatService.printAll(ChatService.chatsByUserId)
+    println(ChatService.getChatsByUserId(222).joinToString(separator = "\n"))
     println("")
     println("Редактирование сообщения")
     ChatService.editMessage(
@@ -51,9 +50,9 @@ fun main() {
     ChatService.printAll(ChatService.chats)
     println("")
     println("Количество непрочитанных чатов")
-    ChatService.getUnreadChatsCount(444)
-    ChatService.getUnreadChatsCount(222)
-    ChatService.getUnreadChatsCount(555)
+    println("Id пользователя: 444, Непрочитанных чатов - ${ChatService.getUnreadChatsCount(444)}")
+    println("Id пользователя: 222, Непрочитанных чатов - ${ChatService.getUnreadChatsCount(222)}")
+    println("Id пользователя: 555, Непрочитанных чатов - ${ChatService.getUnreadChatsCount(555)}")
     println("")
     println("Удалить все сообщения из чата - оставить пустой чат")
     ChatService.deleteMessage(Message(id = 5, fromUserId = 444, toUserId = 555))
@@ -61,10 +60,18 @@ fun main() {
     ChatService.printAll(ChatService.chats)
     println("")
     println("Получить последние сообщения из чатов")
-    println(ChatService.getLastMessages().joinToString(separator = ""))
+    println(ChatService.getLastMessages().joinToString(separator = "\n"))
     println("")
     println("Получить сообщения по заданным параметрам и отметить их прочитанными")
-    ChatService.getMessages(firstUserId = 222, secondUserId = 555, recipientId = 555, lastMessageId = 7, count = 2)
+    println(
+        ChatService.getMessages(
+            firstUserId = 222,
+            secondUserId = 555,
+            recipientId = 555,
+            lastMessageId = 7,
+            count = 2
+        ).joinToString(separator = "")
+    )
     println("Список чатов")
     ChatService.printAll(ChatService.chats)
 }

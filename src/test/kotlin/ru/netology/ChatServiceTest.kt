@@ -138,8 +138,8 @@ class ChatServiceTest {
         ChatService.sendMessage(Message(fromUserId = 444, toUserId = 222, text = "Message 1 to the chat 444 <-> 222"))
         ChatService.sendMessage(Message(fromUserId = 444, toUserId = 555, text = "Message 1 to the chat 444 <-> 555"))
         ChatService.sendMessage(Message(fromUserId = 222, toUserId = 444, text = "Message 2 to the chat 444 <-> 222"))
-        val result = ChatService.deleteChat(222, 444)
-        assertTrue(result)
+        val result = ChatService.deleteChat(222, 444).userId
+        assertEquals(setOf(222, 444), result)
     }
 
     @Test(expected = ChatNotFoundException::class)
@@ -201,6 +201,14 @@ class ChatServiceTest {
         ChatService.sendMessage(Message(fromUserId = 222, toUserId = 444, text = "Message 1 to the chat 444 <-> 222"))
         ChatService.sendMessage(Message(fromUserId = 555, toUserId = 444, text = "Message 1 to the chat 444 <-> 555"))
         ChatService.deleteMessage(Message(id = 1, fromUserId = 222, toUserId = 444))
+        val result = ChatService.getLastMessages().first()
+        assertEquals("No messages", result)
+    }
+
+    @Test
+    fun getLastMessagesNoTextExisting() {
+        ChatService.sendMessage(Message(fromUserId = 222, toUserId = 444, text = null))
+        ChatService.sendMessage(Message(fromUserId = 555, toUserId = 444, text = null))
         val result = ChatService.getLastMessages().first()
         assertEquals("No messages", result)
     }

@@ -13,7 +13,7 @@ data class Message(
     var id: Int = 0,
     val fromUserId: Int,
     val toUserId: Int,
-    val text: String = "text",
+    val text: String? = "text",
     var read: Boolean = false,
 ) {
     override fun toString(): String {
